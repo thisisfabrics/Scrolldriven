@@ -1,3 +1,174 @@
+import "https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js"
+
+document.querySelector(".navigation-bar-support").animate(
+    [
+        { backgroundColor: "var(--bg)" },
+        { backgroundColor: "var(--bc)" }
+    ],
+    {
+        fill: "both",
+        timeline: new ScrollTimeline(),
+        rangeStart: `${window.innerHeight}px`,
+        rangeEnd: `${2000 + window.innerHeight}px`
+    }
+)
+document.querySelector(".navigation-bar-support").animate(
+    [
+        { zIndex: 0, offset: 0.9 },
+        { zIndex: 100, offset: 1.0 },
+    ],
+    {
+        fill: "both",
+        timeline: new ScrollTimeline(),
+        rangeStart: `${window.innerHeight}px`,
+        rangeEnd: `${2000 + window.innerHeight}px`
+    }
+)
+
+document.querySelector(".background-1").animate(
+    [
+        { opacity: 1, transform: "scale(1)" },
+        { opacity: 0, transform: "scale(4)" }
+    ],
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector(".background-1")
+        }),
+        rangeStart: `${window.innerHeight}px`,
+        rangeEnd: `${window.innerHeight + 2000}px`
+    }
+)
+
+document.querySelector("h1").animate(
+    {
+        opacity: [1, 0]
+    },
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector("h1")
+        }),
+        rangeStart: `${window.innerHeight}px`,
+        rangeEnd: `${window.innerHeight * 1.5}px`
+    }
+)
+
+document.querySelector("h4").animate(
+    {
+        opacity: [0, 1]
+    },
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector("h4")
+        }),
+        rangeStart: "0px",
+        rangeEnd: `50%`
+    }
+)
+
+document.querySelector("h5").animate(
+    {
+        opacity: [0, 1]
+    },
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector("h5")
+        }),
+        rangeStart: "0px",
+        rangeEnd: `50%`
+    }
+)
+
+document.querySelector("h6").animate(
+    {
+        opacity: [0, 1]
+    },
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector("h6")
+        }),
+        rangeStart: "0px",
+        rangeEnd: `50%`
+    }
+)
+
+for (let elem of document.querySelectorAll(".figure__stickers__item")) {
+    elem.animate(
+        [
+            { opacity: 0, transform: "rotateZ(180deg) scale(0.2)", offset: 1.0 }
+        ],
+        {
+            fill: "both",
+            timeline: new ViewTimeline({
+                subject: elem
+            }),
+            rangeStart: "0px",
+            rangeEnd: "150%"
+        }
+    )
+}
+
+document.querySelector(".space-for-horizontal-scrolling").animate(
+    [
+        { opacity: 0, offset: 1.0 }
+    ],
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector(".space-for-horizontal-scrolling")
+        }),
+        rangeStart: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight + 0.25 * window.innerHeight}px`,
+        rangeEnd: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2) * window.innerHeight + 0.25 * window.innerHeight}px`
+    }
+)
+
+document.querySelector(".pipeline").animate(
+    [
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 0 / 100)) translateX(calc((var(--count-of-slides) - 5) * -100dvw))", offset: 0.0 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 16 / 100)) translateX(calc((var(--count-of-slides) - 5) * -100dvw))", offset: 0.16 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 20 / 100)) translateX(calc((var(--count-of-slides) - 4) * -100dvw))", offset: 0.2 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 36 / 100)) translateX(calc((var(--count-of-slides) - 4) * -100dvw))", offset: 0.36 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 40 / 100)) translateX(calc((var(--count-of-slides) - 3) * -100dvw))", offset: 0.4 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 56 / 100)) translateX(calc((var(--count-of-slides) - 3) * -100dvw))", offset: 0.56 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 60 / 100)) translateX(calc((var(--count-of-slides) - 2) * -100dvw))", offset: 0.6 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 76 / 100)) translateX(calc((var(--count-of-slides) - 2) * -100dvw))", offset: 0.76 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 80 / 100)) translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 0.8 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 96 / 100)) translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 0.96 },
+        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 100 / 100)) translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 1.0 }
+    ],
+    {
+        fill: "both",
+        timeline: new ScrollTimeline(),
+        rangeStart: `${window.innerHeight + 2000}px`,
+        rangeEnd: `${window.innerHeight + 2000 + (window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight}px`
+    }
+)
+
+for (let [i, elem] of document.querySelectorAll(".pipeline__fullscreen-slide").entries()) {
+    elem.animate(
+        [
+            { opacity: 0, transform: "scale(3)", offset: 0.9999 },
+            { opacity: 0, offset: 1.0 }
+        ],
+        {
+            fill: "both",
+            timeline: new ViewTimeline({
+                subject: elem
+            }),
+            rangeStart: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight * [
+                0, 16, 20, 36, 40, 56, 60, 76, 80, 96, 150
+            ][i * 2 + 1] / 100 + window.innerHeight}px`,
+            rangeEnd: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight * [
+                0, 16, 20, 36, 40, 56, 60, 76, 80, 96, 150
+            ][i * 2 + 2] / 100 + window.innerHeight}px`
+        }
+    )
+}
+
 import * as THREE from "three"
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 
@@ -124,11 +295,11 @@ function Up(event) {
         } catch { }
     }
 }
-Up({target: window})
+Up({ target: window })
 
 // to bottom
 document.querySelector("#tobottom").addEventListener("click", () => {
-    window.scrollTo({"behavior": "smooth", "top": document.querySelector("#contacts").offsetTop})
+    window.scrollTo({ "behavior": "smooth", "top": document.querySelector("#contacts").offsetTop })
     if (document.querySelector(".burger__line-1").classList.contains("burger__line-1_full"))
         burger()
 })

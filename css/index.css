@@ -35,10 +35,10 @@ body {
     background-color: var(--bg);
     height: var(--navigation-bar-height);
     width: 100%;
-    animation: gotop linear forwards;
+    /* animation: gotop linear forwards;
     animation-timeline: scroll();
     animation-range-start: 100dvh;
-    animation-range-end: calc(100dvh + 2000px);
+    animation-range-end: calc(100dvh + 2000px); */
 }
 
 @keyframes gotop {
@@ -81,7 +81,7 @@ body {
     border-radius: 15px;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--bg);
+    background-color: var(--bc);
 }
 
 .navigation-bar__menu__item {
@@ -101,10 +101,10 @@ body {
     overflow: hidden;
     position: absolute;
     transform-origin: top;
-    animation: front-push linear forwards;
+    /* animation: front-push linear forwards;
     animation-timeline: view();
     animation-range-start: 100dvh;
-    animation-range-end: calc(100dvh + 2000px);
+    animation-range-end: calc(100dvh + 2000px); */
 }
 
 @keyframes front-push {
@@ -134,10 +134,10 @@ h1 {
     color: white;
     font: 500 100px/100px "Josefin Sans";
     overflow: hidden;
-    animation: transmit linear forwards;
+    /* animation: transmit linear forwards;
     animation-timeline: view();
     animation-range-start: 100dvh;
-    animation-range-end: 150dvh;
+    animation-range-end: 150dvh; */
 }
 
 @keyframes transmit {
@@ -169,9 +169,9 @@ h4 {
     margin-top: 200px;
     margin-bottom: 200px;
     opacity: 0;
-    animation: appear linear forwards;
+    /* animation: appear linear forwards;
     animation-timeline: view();
-    animation-range-end: 50%;
+    animation-range-end: 50%; */
 }
 
 h5 {
@@ -179,10 +179,10 @@ h5 {
     color: white;
     z-index: -1;
     margin-top: 500px;
-    animation: appear linear forwards;
     opacity: 0;
+    /* animation: appear linear forwards;
     animation-timeline: view();
-    animation-range-end: 50%;
+    animation-range-end: 50%; */
 }
 
 h6 {
@@ -191,10 +191,10 @@ h6 {
     z-index: -1;
     margin-top: 200px;
     margin-bottom: 100px;
-    animation: appear linear forwards;
     opacity: 0;
+    /* animation: appear linear forwards;
     animation-timeline: view();
-    animation-range-end: 50%;
+    animation-range-end: 50%; */
 }
 
 h1 span {
@@ -240,10 +240,10 @@ h1 span {
     width: 50%;
     margin: 0 auto;
     transform: rotateZ(35deg) scale(0.8);
-    animation: rotation linear forwards;
+    /* animation: rotation linear forwards;
     animation-timeline: view();
     animation-range-start: 0;
-    animation-range-end: 150%;
+    animation-range-end: 150%; */
 }
 
 .figure__stickers__item+.figure__stickers__item {
@@ -264,19 +264,19 @@ h1 span {
 .space-for-horizontal-scrolling {
     height: calc(var(--count-of-slides) * 2 * 100dvh);
     width: 100%;
-    animation: transmit forwards linear;
+    /* animation: transmit forwards linear;
     animation-timeline: view();
     animation-range-start: calc((var(--count-of-slides) * 2 - 1) * 100dvh + 25dvh);
-    animation-range-end: calc((var(--count-of-slides) * 2) * 100dvh + 25dvh);
+    animation-range-end: calc((var(--count-of-slides) * 2) * 100dvh + 25dvh); */
 }
 
 .pipeline {
     display: flex;
     width: calc(var(--count-of-slides) * 100dvw);
     height: 100dvh;
-    animation: fixate linear forwards;
+    /* animation: fixate linear forwards;
     animation-timeline: scroll();
-    animation-range: calc(100dvh + 2000px) calc(100dvh + 2000px + calc((var(--count-of-slides) * 2 - 1) * 100dvh));
+    animation-range: calc(100dvh + 2000px) calc(100dvh + 2000px + calc((var(--count-of-slides) * 2 - 1) * 100dvh)); */
 }
 
 @keyframes fixate {
@@ -331,10 +331,10 @@ h1 span {
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: disappear forwards linear;
+    /* animation: disappear forwards linear;
     animation-timeline: view();
     animation-range-start: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 16 / 100 + 100dvh);
-    animation-range-end: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 20 / 100 + 100dvh)
+    animation-range-end: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 20 / 100 + 100dvh) */
 }
 
 .pipeline__fullscreen-slide+.pipeline__fullscreen-slide {
@@ -363,10 +363,10 @@ h1 span {
     z-index: -1;
     transform: scale(1) rotateZ(-20deg) translateX(100%) translateY(50%);
     transform-origin: right;
-    animation: disappear linear forwards;
+    /* animation: disappear linear forwards;
     animation-timeline: view();
     animation-range-start: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 60 / 100 + 100dvh);
-    animation-range-end: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 76 / 100 + 100dvh)
+    animation-range-end: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 76 / 100 + 100dvh) */
 }
 
 .slide__logotypes__item+.slide__logotypes__item {
@@ -491,8 +491,8 @@ h1 span {
     display: flex;
     height: 100%;
     width: fit-content;
-    animation: horiscroll linear forwards;
-    animation-timeline: view();
+    /* animation: horiscroll linear forwards;
+    animation-timeline: view(); */
 }
 
 @keyframes horiscroll {
@@ -590,8 +590,8 @@ ol {
 .example {
     clip-path: inset(45% 20% 45% 20%);
     opacity: 0;
-    animation: example linear forwards;
-    animation-timeline: view();
+    /* animation: example linear forwards;
+    animation-timeline: view(); */
 }
 
 @keyframes example {
@@ -624,10 +624,10 @@ ol {
     width: 80%;
     max-width: 400px;
     margin-bottom: 500px;
-    animation: appear linear forwards;
     opacity: 0;
+    /* animation: appear linear forwards;
     animation-timeline: view();
-    animation-range-end: 50%;
+    animation-range-end: 50%; */
 }
 
 @keyframes draw {
@@ -656,9 +656,9 @@ ol {
     width: 60% !important;
     aspect-ratio: 1;
     height: unset !important;
-    animation: fly linear forwards;
+    /* animation: fly linear forwards;
     animation-timeline: view();
-    animation-range-start: 20%;
+    animation-range-start: 20%; */
     transform: translateY(-50%) scale(0.5) translateX(50%);
 }
 
