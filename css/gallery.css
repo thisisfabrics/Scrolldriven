@@ -1,0 +1,369 @@
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+:root {
+    --bg: rgb(22, 22, 26);
+    --bc: rgb(13, 13, 15);
+    --gap: 20px;
+    --roundness: 40px;
+    --vbox: 300px;
+    --button-padding: 30px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: var(--bc);
+    overflow-x: hidden;
+}
+
+.grid {
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--gap);
+    padding: var(--gap);
+    box-sizing: border-box;
+}
+
+.grid__placeholder-item {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(90deg, transparent, white, transparent);
+    background-size: 200%;
+    background-repeat: no-repeat;
+    animation: 1000ms glide linear infinite;
+}
+
+.grid__placeholder-item__viewer {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+.grid__placeholder-item__viewer_big {
+    border-radius: var(--button-padding);
+}
+
+.viewerplace {
+    height: calc(100% - 75px);
+}
+
+@keyframes glide {
+    from {
+        background-position-x: -200%;
+    }
+    to {
+        background-position-x: 200%;
+    }
+}
+
+.window {
+    position: fixed;
+    width: 100dvw;
+    height: 100dvh;
+    background-color: var(--bc);
+    transition: opacity 500ms;
+    display: flex;
+    justify-content: center;
+}
+
+.font {
+    font: 900 40px/35px "Roboto";
+    color: white;
+}
+
+.window__vbox {
+    display: flex;
+    width: var(--vbox);
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--gap) var(--gap)  var(--gap) 0;
+    max-width: 2560px;
+    max-height: 2560px;
+}
+
+.window__vbox + .window__vbox {
+    order: -1;
+    flex-grow: 1;
+    padding: var(--gap);
+}
+
+.button {
+    width: 100%;
+    background-color: rgb(40, 41, 43);
+    color: white;
+    font: 500 20px/25px "Roboto";
+    padding: var(--button-padding);
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 100px;
+    transition: background-color 500ms;
+    user-select: none;
+}
+
+.button:hover {
+    background-color: black;
+}
+
+.sensetivity-label {
+    width: fit-content;
+}
+
+.sensetivity-label input {
+    width: 100%;
+}
+
+.cross {
+    width: 35px;
+}
+
+.button-row {
+    display: flex;
+}
+
+.button-row .button {
+    border-radius: var(--button-padding) 0 0 var(--button-padding);
+    padding: var(--button-padding) 5px var(--button-padding) var(--button-padding); 
+}
+
+.button-row .button + .button {
+    border-radius: 0 var(--button-padding) var(--button-padding) 0;
+    margin-left: 5px;
+    padding: var(--button-padding) var(--button-padding) var(--button-padding) 5px;
+}
+
+.watermark {
+    font: 900 6dvh/4dvh "Roboto";
+    color: var(--bg);
+    padding: 5dvh;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    user-select: none;
+}
+
+/* modifiers */
+
+.transparent {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.self-flex-end {
+    align-self: flex-end;
+}
+
+.hide-y-overflow {
+    overflow-y: hidden;
+}
+
+.none {
+    display: none;
+}
+
+.josefin {
+    font-family: "Josefin Sans";
+}
+
+@media (width < 1128px) {
+    .cross {
+        width: 20px;
+    }
+
+    .font {
+        line-height: 20px;
+        font-size: 25px;
+    }
+
+    .viewerplace {
+        height: calc(100% - var(--gap) * 2);
+    }
+
+    :root {
+        --vbox: 200px;
+    }
+}
+
+@media (width < 900px) or (height < 500px) {
+    :root {
+        --button-padding: 5px;
+    }
+
+    .button-row .button {
+        border-radius: 100px 0 0 100px;
+    }
+
+    .button-row .button + .button {
+        border-radius: 0 100px 100px 0;
+    }
+}
+
+@media (width < 700px) and (height >= 300px) {
+    .cross {
+        margin-left: var(--gap);
+    }
+
+    :root {
+        --vbox: 90px;
+    }
+
+    .button-row .button + .button {
+        border-radius: 0;
+        margin: 0;
+    }
+
+    form {
+        position: absolute;
+        bottom: 15px;
+        right: 20px;
+    }
+
+    .sensetivity-label .button {
+        border-radius: 0;
+        padding: 0;
+        background-color: unset;
+    }
+
+    .window {
+        flex-direction: column;
+    }
+
+    .window__vbox {
+        width: 100%;
+        height: var(--vbox);
+        flex-direction: row;
+        padding: var(--gap);
+        align-items: center;
+    }
+
+    .window__vbox + .window__vbox {
+        padding: 0 var(--gap) var(--gap) var(--gap);
+        flex-direction: column;
+        order: unset;
+        align-items: unset;
+    }
+
+    .button-row {
+        width: 50%;
+    }
+
+    a {
+        flex-grow: 1;
+    }
+
+    a .button {
+        border-radius: 0 100px 100px 0;
+    }
+
+    .self-flex-end {
+        align-self: center;
+        order: 5;
+    }
+
+    .font {
+        padding-bottom: 0;
+    }
+}
+
+@media (width < 452px) and (height >= 300px) {
+    :root {
+        --gap: 10px;
+        --vbox: 40px;
+    }
+
+    .button {
+        padding: 2px;
+    }
+
+    .button-row .button {
+        padding: 2px;
+    }
+
+    .button-row .button + .button {
+        padding: 2px;
+    }
+
+    .font {
+        align-self: flex-start;
+        margin-bottom: -5px;
+    }
+
+    form {
+        bottom: 2px;
+    }
+}
+
+@media (width < 700px) and (height < 500px) and (height >= 300px) {
+    .viewerplace {
+        height: calc(100% - var(--gap) * 2);
+    }
+
+    :root {
+        --vbox: 60px;
+    }
+
+    .font {
+        margin-top: calc(-1 * var(--gap));
+    }
+}
+
+@media (height < 300px) {
+    .cross {
+        width: 20px;
+    }
+
+    .window__vbox + .window__vbox {
+        padding: 0;
+        transform: translateY(-20px);
+    }
+
+    .font {
+        line-height: 20px;
+        font-size: 25px;
+        transform: translateY(40px);
+    }
+
+    .viewerplace {
+        height: 100dvh;
+        padding-right: calc(var(--gap) * 3);
+    }
+
+    .grid__placeholder-item__viewer_big {
+        height: inherit !important;
+        border-radius: 0;
+    }
+}
+
+@media (width < 452px) and (height < 300px) {
+    :root {
+        --vbox: 80px;
+        --button-padding: 4px;
+    }
+
+    .viewerplace {
+        padding-right: 0;
+    }
+
+    .window__vbox {
+        padding: 5px;
+    }
+
+    .button {
+        line-height: 16px;
+        font-size: 12px;
+        border-radius: 5px;
+    }
+}

@@ -1,23 +1,35 @@
 import * as THREE from "three"
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 
-let currentViewer = 0
-const models = ["/models/TShirt.glb", "/models/Cap.glb"]
-const scenes = [new THREE.Scene(), new THREE.Scene()]
-const cameras = [new THREE.PerspectiveCamera(75, 1, 0.1, 1000), new THREE.PerspectiveCamera(75, 1, 0.1, 1000)]
-const renderers = [new THREE.WebGLRenderer({ antialias: true }), new THREE.WebGLRenderer({ antialias: true })]
-const loaders = [new GLTFLoader(), new GLTFLoader()]
-const lights = [new THREE.HemisphereLight(0xffffff, 0x000000, 3), new THREE.HemisphereLight(0xffffff, 0x000000, 3)]
+let currentModelIdentifier = 0
+let identifiers = [0, 1, 2, 3]
+const models = ["/models/TShirt.glb", "/models/Cap.glb", "/models/Pants.glb", "/models/SportPants.glb",]
+const scenes = []
+const cameras = []
+const renderers = []
+const loaders = []
+const lights = []
+for (let i of identifiers) {
+    scenes.push(new THREE.Scene())
+    cameras.push(new THREE.PerspectiveCamera(75, 1, 0.1, 1000))
+    renderers.push(new THREE.WebGLRenderer({ antialias: true }))
+    loaders.push(new GLTFLoader())
+    lights.push(new THREE.HemisphereLight(0xffffff, 0x000000, 3))
+}
 
-
-let minimodels = ["/models/TShirt.glb", "/models/Cap.glb"]
-let miniscenes = [new THREE.Scene(), new THREE.Scene()]
-let minicameras = [new THREE.PerspectiveCamera(50, 1, 0.1, 1000), new THREE.PerspectiveCamera(50, 1, 0.1, 1000)]
-let minirenderers = [new THREE.WebGLRenderer({ antialias: true }), new THREE.WebGLRenderer({ antialias: true })]
-const miniloaders = [new GLTFLoader(), new GLTFLoader()]
-const minilights = [new THREE.HemisphereLight(0xffffff, 0x000000, 1), new THREE.HemisphereLight(0xffffff, 0x000000, 1)]
-
-let identifiers = [0, 1]
+const minimodels = ["/models/TShirt.glb", "/models/Cap.glb", "/models/Pants.glb", "/models/SportPants.glb",]
+const miniscenes = []
+const minicameras = []
+const minirenderers = []
+const miniloaders = []
+const minilights = []
+for (let i of identifiers) {
+    miniscenes.push(new THREE.Scene())
+    minicameras.push(new THREE.PerspectiveCamera(50, 1, 0.1, 1000))
+    minirenderers.push(new THREE.WebGLRenderer({ antialias: true }))
+    miniloaders.push(new GLTFLoader())
+    minilights.push(new THREE.HemisphereLight(0xffffff, 0x000000, 3))
+}
 
 // initialize models
 for (let i of identifiers) {
@@ -25,20 +37,20 @@ for (let i of identifiers) {
         scenes[i].add(gltf.scene)
         gltf.scene.traverse(o => {
             if (o.isMesh) {
-                models[i] = o
-                let texture = (new THREE.TextureLoader()).load("/images/T_TShirt_BC_8K.png")
+                let texture = (new THREE.TextureLoader()).load("/images/White.png")
                 texture.flipY = false
-                o.material = new THREE.MeshStandardMaterial({ map: texture, side: THREE.DoubleSide })
+                o.material = new THREE.MeshStandardMaterial({ map: texture })
+                models[i] = o
             }
         })
     }, undefined, function (error) {
         console.error(error)
     })
 
-    cameras[i].position.z = 100
+    cameras[i].position.z = 150
     scenes[i].add(lights[i])
     renderers[i].setSize(2560, 2560)
-    renderers[i].setClearColor(0x16161a, 1)
+    renderers[i].setClearColor(0x16161a, 0)
     renderers[i].setAnimationLoop(() => {
         renderers[i].render(scenes[i], cameras[i])
     })
@@ -53,7 +65,7 @@ for (let i of identifiers) {
         gltf.scene.traverse(o => {
             if (o.isMesh) {
                 minimodels[i] = o
-                o.material = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide })
+                o.material = new THREE.MeshStandardMaterial({})
             }
         })
     }, undefined, function (error) {
@@ -63,63 +75,22 @@ for (let i of identifiers) {
     minicameras[i].position.z = 150
     miniscenes[i].add(minilights[i])
     minirenderers[i].setSize(500, 500)
-    minirenderers[i].setClearColor(0x2b2b2c, 1)
+    minirenderers[i].setClearColor(0x2b2b2c, 0)
     minirenderers[i].setAnimationLoop(() => {
         minirenderers[i].render(miniscenes[i], minicameras[i])
         try {
-        minimodels[i].rotation.y += 0.01 } catch {}
+            minimodels[i].rotation.y += 0.01
+        } catch { }
     })
     document.querySelector(".control-panel__window").appendChild(minirenderers[i].domElement)
     minirenderers[i].domElement.classList.add("control-panel__window__model")
     minirenderers[i].domElement.setAttribute("id", `icon${i}`)
     minirenderers[i].domElement.addEventListener("click", () => {
-        currentViewer = i
+        currentModelIdentifier = i
         updateEverything()
     })
 }
 updateEverything()
-
-
-
-// scene manipulations
-let sensetivity = 0.01
-document.addEventListener("mousemove", (event) => {
-    if (event.buttons == 1) {
-        models[currentViewer].rotation.y += event.movementX * sensetivity
-        models[currentViewer].rotation.x += event.movementY * sensetivity
-    }
-})
-
-let previousTouchX = 0 
-let previousTouchY = 0
-
-document.addEventListener("touchstart", (event) => {
-    previousTouchX = event.changedTouches[0].screenX
-    previousTouchY = event.changedTouches[0].screenY
-})
-
-document.addEventListener("touchmove", (event) => {
-
-    models[currentViewer].rotation.y += (event.changedTouches[0].screenX - previousTouchX) * sensetivity
-    models[currentViewer].rotation.x += (event.changedTouches[0].screenY - previousTouchY)* sensetivity
-
-    previousTouchX = event.changedTouches[0].screenX
-    previousTouchY = event.changedTouches[0].screenY
-})
-
-//change the texture
-document.addEventListener("change", () => {
-    let reader = new FileReader()
-    reader.readAsDataURL(document.querySelector("input").files[0])
-    console.log("duh")
-    reader.onload = (e) => {
-        let textureLoader = new THREE.TextureLoader()
-        let texture = textureLoader.load(e.target.result)
-        texture.flipY = false
-        models[currentViewer].material.map = texture
-    }
-})
-
 
 function updateEverything() {
     for (let i of identifiers) {
@@ -127,16 +98,146 @@ function updateEverything() {
         for (let style of ["moved_up", "moved_down", "disclosed_up", "disclosed_down"]) {
             currentIcon.classList.remove(style)
         }
-        if (Math.abs(currentViewer - i) > 1) {
-            currentIcon.classList.add(currentViewer - i > 0 ? "disclosed_up" : "disclosed_down")
-        } else if (Math.abs(currentViewer - i) == 1) {
-            currentIcon.classList.add(currentViewer - i > 0 ? "moved_up" : "moved_down")
+        if (Math.abs(currentModelIdentifier - i) > 1) {
+            currentIcon.classList.add(currentModelIdentifier - i > 0 ? "disclosed_up" : "disclosed_down")
+        } else if (Math.abs(currentModelIdentifier - i) == 1) {
+            currentIcon.classList.add(currentModelIdentifier - i > 0 ? "moved_up" : "moved_down")
         }
     }
-    document.querySelector(".viewers").style.transform = `translateX(calc(${document.querySelector(".viewer").clientWidth}px * -${currentViewer}))`
-    document.querySelector("form").reset()
+    document.querySelector(".viewers").style.transform = `translateX(calc(${document.querySelector(".viewer").clientWidth}px * -${currentModelIdentifier}))`
 }
 
-document.addEventListener("wheel", event => {
-    cameras[currentViewer].position.z += event.deltaY * 5 * sensetivity
+// scene manipulations
+let sensetivity = 1 / 100
+document.addEventListener("mousemove", (event) => {
+    if (event.buttons == 1) {
+        models[currentModelIdentifier].rotation.y += event.movementX * sensetivity
+        models[currentModelIdentifier].rotation.x += event.movementY * sensetivity
+    }
 })
+let previousTouchX = 0
+let previousTouchY = 0
+let previousTouchXX = null
+let previousTouchYY = null
+let scaleMode = false
+document.addEventListener("touchstart", (event) => {
+    previousTouchX = event.touches[0].screenX
+    previousTouchY = event.touches[0].screenY
+    if (event.touches.length > 1) {
+        scaleMode = true
+        previousTouchXX = event.touches[1].screenX
+        previousTouchYY = event.touches[1].screenY
+    }
+})
+document.addEventListener("touchmove", (event) => {
+    if (scaleMode) {
+        let delta = Math.sqrt((previousTouchX - previousTouchXX) ** 2 + (previousTouchY - previousTouchYY) ** 2)
+        delta -= Math.sqrt((event.touches[1].screenX - event.touches[0].screenX) ** 2 + (event.touches[1].screenY - event.touches[0].screenY) ** 2)
+        cameras[currentModelIdentifier].position.z += delta * 25 * sensetivity
+        previousTouchXX = event.touches[1].screenX
+        previousTouchYY = event.touches[1].screenY
+    } else {
+        models[currentModelIdentifier].rotation.y += (event.touches[0].screenX - previousTouchX) * sensetivity
+        models[currentModelIdentifier].rotation.x += (event.touches[0].screenY - previousTouchY) * sensetivity
+    }
+    previousTouchX = event.touches[0].screenX
+    previousTouchY = event.touches[0].screenY
+})
+document.addEventListener("touchend", (event) => {
+    if (event.touches.length == 0)
+        scaleMode = false
+})
+document.addEventListener("wheel", event => {
+    cameras[currentModelIdentifier].position.z += event.deltaY * 5 * sensetivity
+})
+
+// change the texture
+document.querySelector("form").addEventListener("change", () => {
+    let reader = new FileReader()
+    reader.readAsDataURL(document.querySelector("input").files[0])
+    reader.onload = (e) => {
+        let textureLoader = new THREE.TextureLoader()
+        let texture = textureLoader.load(e.target.result)
+        texture.flipY = false
+        models[currentModelIdentifier].material.map = texture
+    }
+    document.querySelector("form").reset()
+})
+// change the color
+document.querySelectorAll("form")[1].addEventListener("change", (event) => {
+    document.querySelector("body").style.backgroundColor = document.querySelector("#j").value
+})
+// change the sensetivity
+document.querySelectorAll("form")[2].addEventListener("change", (event) => {
+    sensetivity = document.querySelector("#k").value / 1000
+})
+
+let masks = ["/images/T_TShirt_BW_8K.png", "/images/T_Cap_BW_8K.png", "/images/T_Pants_BW_8K.png", "/images/T_SportPants_BW_8K.png"]
+// buttons
+document.querySelector("#uv").addEventListener("click", () => {
+    document.querySelector("#texture").setAttribute("src", models[currentModelIdentifier].material.map.image.getAttribute("src"))
+    document.querySelector("#mask").setAttribute("src", masks[currentModelIdentifier])
+    document.querySelector(".uv").classList.toggle("none")
+})
+
+document.querySelector(".uv").addEventListener("click", (event) => {
+    document.querySelector(".uv").classList.toggle("none")
+})
+
+document.querySelector("#k").addEventListener("click", () => {
+    document.querySelector("#k").classList.toggle("none")
+})
+
+let savedSensetivity
+document.querySelector("#question").addEventListener("click", () => {
+    document.querySelector(".darken").classList.toggle("none")
+    document.querySelector(".rules").classList.toggle("none")
+    savedSensetivity = sensetivity
+    sensetivity = 0
+})
+
+document.querySelector(".darken").addEventListener("click", () => {
+    document.querySelector(".darken").classList.toggle("none")
+    document.querySelector(".rules").classList.toggle("none")
+    sensetivity = savedSensetivity
+})
+
+// carousel
+for (let elem of document.querySelectorAll(".carousel__handle"))
+    elem.addEventListener("click", handleClick)
+function handleClick(event) {
+    let make = false
+    for (let elem of (event.target.getAttribute("id") == "right" ? document.querySelectorAll(".carousel__image") : [...document.querySelectorAll(".carousel__image")].reverse())) {
+        if (!elem.classList.contains("invisible")) {
+            elem.classList.add("invisible")
+            make = true
+        } else if (make) {
+            make = false
+            elem.classList.remove("invisible")
+        }
+    }
+    if (make)
+        (event.target.getAttribute("id") == "right" ? document.querySelectorAll(".carousel__image") : [...document.querySelectorAll(".carousel__image")].reverse())[0].classList.remove("invisible")
+}
+
+
+// Cream Soda
+let probe
+window.addEventListener("resize", creamSoda)
+function creamSoda(event) {
+    probe = document.querySelector(".rules__image")
+    if (event.target.innerWidth <= 800 && probe.getAttribute("data-revolution").includes("Revolution")) {
+        for (let elem of [...document.querySelectorAll(".rules__image")].concat([...document.querySelectorAll(".carousel__image")].concat([...document.querySelectorAll(".carousel__higher")]))) {
+            let dataRevolution = elem.getAttribute("data-revolution")
+            elem.setAttribute("data-revolution", elem.getAttribute("src"))
+            elem.setAttribute("src", dataRevolution)
+        }
+    } else if (event.target.innerWidth > 800 && !probe.getAttribute("data-revolution").includes("Revolution")) {
+        for (let elem of [...document.querySelectorAll(".rules__image")].concat([...document.querySelectorAll(".carousel__image")].concat([...document.querySelectorAll(".carousel__higher")]))) {
+            let dataRevolution = elem.getAttribute("data-revolution")
+            elem.setAttribute("data-revolution", elem.getAttribute("src"))
+            elem.setAttribute("src", dataRevolution)
+        }
+    }
+}
+creamSoda({ target: window })

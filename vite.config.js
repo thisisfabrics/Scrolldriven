@@ -5,8 +5,8 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 index: "./index.html",
-                attention: "./attention.html",
-                applier: "./applier.html"
+                applier: "./applier.html",
+                gallery: "./gallery.html"
             }
         }
     }
