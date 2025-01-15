@@ -385,10 +385,6 @@ class Game {
     }
 
     loop = () => {
-        if (this.musicBox.volume < 1) {
-            this.musicBox.volume = Math.min(1, this.musicBox.volume + 0.01)
-        }
-
         if (this.movementStarted) {
             this.sheight.setAngle(this.pointerX, this.pointerY, this.pointerXX, this.pointerYY)
             this.controller.style.setProperty("transform", `scale(1) rotateZ(-${this.sheight.angle}deg)`)
@@ -417,7 +413,6 @@ class Game {
 var game = new Game()
 
 document.addEventListener("mousemove", event => {
-    
     if (event.buttons == 1) {
         if (!game.movementStarted) {
             game.healthLoosing = 0.3
@@ -439,29 +434,13 @@ document.addEventListener("touchmove", (event) => {
     handleLength = Math.min(75, handleLength)
     game.controller.children[0].style.setProperty("right", `${50 - handleLength}px`)
 })
-
-let doOnce = true
 document.addEventListener("mousedown", event => {
-    if (doOnce) {
-        game.musicBox.volume = 0
-        game.musicBox.muted = false
-        game.musicBox.play()
-        doOnce = false
-    }
-
     if (event.button == 0) {
         game.controller.style.setProperty("left", `${event.clientX - 75}px`)
         game.controller.style.setProperty("top", `${event.clientY - 75}px`)
     }
 })
 document.addEventListener("touchstart", (event) => {
-    if (doOnce) {
-        game.musicBox.volume = 0
-        game.musicBox.muted = false
-        game.musicBox.play()
-        doOnce = false
-    }
-
     if (!game.movementStarted) {
         game.healthLoosing = 0.3
         game.movementStarted = true
@@ -517,3 +496,25 @@ window.addEventListener("resize", () => {
     game.kill()
     game = new Game()
 })
+
+let sou = document.querySelector(".sou")
+sou.addEventListener("click", () => {
+    let data = sou.getAttribute("data-src")
+    sou.setAttribute("data-src", sou.getAttribute("src"))
+    sou.setAttribute("src", data)
+    if (data.includes("on")) {
+        game.musicBox.volume = 0
+        game.musicBox.muted = false
+        game.musicBox.play()
+        sou.style.setProperty("opacity", "0.6")
+        increaseVolume()
+    } else {
+        game.musicBox.volume = 0
+        game.musicBox.muted = true
+    }
+})
+function increaseVolume() {
+    game.musicBox.volume = Math.min(1, game.musicBox.volume + 0.03)
+    if (game.musicBox.volume < 100)
+        setTimeout(increaseVolume, 41.7)
+}

@@ -20,6 +20,13 @@ body {
     position: fixed;
 }
 
+.sou {
+    width: max(5dvh, 20px);
+    position: absolute;
+    left: var(--gap);
+    bottom: var(--gap);
+}
+
 .administrator-hints {
     font: 500 max(2dvh, 12px)/max(3dvh, 16px) "Roboto";
     color: white;
