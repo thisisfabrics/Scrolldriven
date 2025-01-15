@@ -448,8 +448,8 @@ document.addEventListener("touchstart", (event) => {
         game.pointerY = event.touches[0].screenY
         game.pointerXX = event.touches[0].screenX
         game.pointerYY = event.touches[0].screenY
-        game.controller.style.setProperty("left", `${event.touches[0].screenX - 75}px`)
-        game.controller.style.setProperty("top", `${event.touches[0].screenY - 75}px`)
+        game.controller.style.setProperty("left", `${event.touches[0].pageX - 75}px`)
+        game.controller.style.setProperty("top", `${event.touches[0].pageY - 75}px`)
     }
     if (event.touches.length > 1) {
         game.accelerationStarted = true
