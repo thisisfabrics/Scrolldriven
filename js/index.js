@@ -371,7 +371,7 @@ let intersectionObserver = new IntersectionObserver(events => {
         }
     }
 }, { root: null, rootMargin: "0px", threshold: 0 })
-intersectionObserver.observe(document.querySelector(".curve"))
+intersectionObserver.observe(document.querySelector("h5"))
 
 // css can't
 if (CSS.supports("animation-timeline", "scroll()")) {
