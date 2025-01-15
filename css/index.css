@@ -272,6 +272,8 @@ h1 span {
 
 .pipeline {
     display: flex;
+    position: sticky;
+    top: 0;
     width: calc(var(--count-of-slides) * 100dvw);
     height: 100dvh;
     /* animation: fixate linear forwards;

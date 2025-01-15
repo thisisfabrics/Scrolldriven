@@ -1,5 +1,8 @@
 import "https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js"
 
+window.addEventListener("resize", () => {
+    location.reload()
+})
 document.querySelector(".navigation-bar-support").animate(
     [
         { backgroundColor: "var(--bg)" },
@@ -121,24 +124,24 @@ document.querySelector(".space-for-horizontal-scrolling").animate(
         timeline: new ViewTimeline({
             subject: document.querySelector(".space-for-horizontal-scrolling")
         }),
-        rangeStart: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight + 0.25 * window.innerHeight}px`,
-        rangeEnd: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2) * window.innerHeight + 0.25 * window.innerHeight}px`
+        rangeStart: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight + window.innerHeight / 4}px`,
+        rangeEnd: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2) * window.innerHeight + window.innerHeight / 4}px`
     }
 )
 
 document.querySelector(".pipeline").animate(
     [
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 0 / 100)) translateX(calc((var(--count-of-slides) - 5) * -100dvw))", offset: 0.0 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 16 / 100)) translateX(calc((var(--count-of-slides) - 5) * -100dvw))", offset: 0.16 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 20 / 100)) translateX(calc((var(--count-of-slides) - 4) * -100dvw))", offset: 0.2 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 36 / 100)) translateX(calc((var(--count-of-slides) - 4) * -100dvw))", offset: 0.36 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 40 / 100)) translateX(calc((var(--count-of-slides) - 3) * -100dvw))", offset: 0.4 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 56 / 100)) translateX(calc((var(--count-of-slides) - 3) * -100dvw))", offset: 0.56 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 60 / 100)) translateX(calc((var(--count-of-slides) - 2) * -100dvw))", offset: 0.6 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 76 / 100)) translateX(calc((var(--count-of-slides) - 2) * -100dvw))", offset: 0.76 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 80 / 100)) translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 0.8 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 96 / 100)) translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 0.96 },
-        { transform: "translateY(calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 100 / 100)) translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 1.0 }
+        { transform: "translateX(calc((var(--count-of-slides) - 5) * -100dvw))", offset: 0.0 },
+        { transform: "translateX(calc((var(--count-of-slides) - 5) * -100dvw))", offset: 0.16 },
+        { transform: "translateX(calc((var(--count-of-slides) - 4) * -100dvw))", offset: 0.2 },
+        { transform: "translateX(calc((var(--count-of-slides) - 4) * -100dvw))", offset: 0.36 },
+        { transform: "translateX(calc((var(--count-of-slides) - 3) * -100dvw))", offset: 0.4 },
+        { transform: "translateX(calc((var(--count-of-slides) - 3) * -100dvw))", offset: 0.56 },
+        { transform: "translateX(calc((var(--count-of-slides) - 2) * -100dvw))", offset: 0.6 },
+        { transform: "translateX(calc((var(--count-of-slides) - 2) * -100dvw))", offset: 0.76 },
+        { transform: "translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 0.8 },
+        { transform: "translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 0.96 },
+        { transform: "translateX(calc((var(--count-of-slides) - 1) * -100dvw))", offset: 1.0 }
     ],
     {
         fill: "both",
@@ -149,6 +152,24 @@ document.querySelector(".pipeline").animate(
 )
 
 for (let [i, elem] of document.querySelectorAll(".pipeline__fullscreen-slide").entries()) {
+    if (i == 4)
+        break
+    elem.animate(
+        [
+            { opacity: 1, transform: "scale(1)", offset: 0 },
+            { opacity: 0, transform: "scale(3)", offset: 0.9999 },
+            { opacity: 0, offset: 1.0 }
+        ],
+        {
+            fill: "both",
+            timeline: new ScrollTimeline(),
+            rangeStart: `${2000 + window.innerHeight + 7.2 * window.innerHeight / 4 * (i + 1) - 7.2 * window.innerHeight / 20}px`,
+            rangeEnd: `${2000 + window.innerHeight + 7.2 * window.innerHeight / 4 * (i + 1)}px`
+        }
+    )
+}
+
+for (let elem of document.querySelectorAll(".slide__logotypes__item")) {
     elem.animate(
         [
             { opacity: 0, transform: "scale(3)", offset: 0.9999 },
@@ -156,18 +177,59 @@ for (let [i, elem] of document.querySelectorAll(".pipeline__fullscreen-slide").e
         ],
         {
             fill: "both",
-            timeline: new ViewTimeline({
-                subject: elem
-            }),
-            rangeStart: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight * [
-                0, 16, 20, 36, 40, 56, 60, 76, 80, 96, 150
-            ][i * 2 + 1] / 100 + window.innerHeight}px`,
-            rangeEnd: `${(window.getComputedStyle(document.body).getPropertyValue("--count-of-slides") * 2 - 1) * window.innerHeight * [
-                0, 16, 20, 36, 40, 56, 60, 76, 80, 96, 150
-            ][i * 2 + 2] / 100 + window.innerHeight}px`
+            timeline: new ScrollTimeline(),
+            rangeStart: `${2000 + window.innerHeight + 7.2 * window.innerHeight / 4 * (2 + 1) - 7.2 * window.innerHeight / 20}px`,
+            rangeEnd: `${2000 + window.innerHeight + 7.2 * window.innerHeight / 4 * (3 + 1)}px`
         }
     )
 }
+
+document.querySelector(".carousel__pipeline").animate(
+    [
+        { transform: "translateX(-50%)" }
+    ],
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector(".carousel__pipeline")
+        }),
+        rangeStart: "0%",
+        rangeEnd: "100%"
+    }
+)
+
+for (let elem of document.querySelectorAll(".example")) {
+    elem.animate(
+        [
+            { clipPath: "inset(0 0 0 0)", opacity: 1, offset: 0.5 },
+            { clipPath: "inset(0 0 0 0)", opacity: 1, offset: 0.6 },
+            { clipPath: "inset(0 0 0 0)", opacity: 1, offset: 1.0 }
+        ],
+        {
+            fill: "both",
+            timeline: new ViewTimeline({
+                subject: elem
+            }),
+            rangeStart: "0%",
+            rangeEnd: "100%"
+        }
+    )
+}
+
+document.querySelector(".underline").animate(
+    [
+        { opacity: 1 }
+    ],
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector("h5")
+        }),
+        rangeStart: "0%",
+        rangeEnd: "50%"
+    }
+)
+
 
 import * as THREE from "three"
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
@@ -229,6 +291,33 @@ for (let i of identifiers) {
 updatePreviews()
 
 
+let invalidAnimation = document.querySelector(".single-3d").animate(
+    [
+        { opacity: 0.1, transform: "translateY(100%) scale(1.8) translateX(max(-100dvw, -1000px))", offset: 0.8 },
+        { opacity: 0.1, transform: "translateY(100%) scale(1.8) translateX(max(-100dvw, -1000px))", offset: 1.0 }
+    ],
+    {
+        fill: "both",
+        timeline: new ViewTimeline({
+            subject: document.querySelector(".single-3d")
+        }),
+        rangeStart: "20%",
+        rangeEnd: "100%"
+    }
+)
+function playInvalid() {
+    invalidAnimation.play()
+}
+let observerForInvalidAnimation = new IntersectionObserver((entries) => {
+    for (let entry of entries)
+        if (entry.isIntersecting)
+            document.addEventListener("scroll", playInvalid)
+        else
+            document.removeEventListener("scroll", playInvalid)
+}, {root: null, rootMargin: "0px", threshold: 0})
+observerForInvalidAnimation.observe(document.querySelector(".horizontal-text-block"))
+
+
 function updatePreviews() {
     for (let i of identifiers) {
         if (i == 4)
@@ -283,7 +372,6 @@ let intersectionObserver = new IntersectionObserver(events => {
 intersectionObserver.observe(document.querySelector(".curve"))
 
 // css can't
-window.addEventListener("resize", Up)
 function Up(event) {
     if (event.target.innerHeight <= event.target.innerWidth)
         return
