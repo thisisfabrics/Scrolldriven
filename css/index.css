@@ -364,9 +364,9 @@ h1 span {
     transform: scale(1) rotateZ(-20deg) translateX(100%) translateY(50%);
     transform-origin: right;
     animation: disappear linear forwards;
-    animation-timeline: view();
-    animation-range-start: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 60 / 100 + 100dvh);
-    animation-range-end: calc(calc((var(--count-of-slides) * 2 - 1) * 100dvh) * 76 / 100 + 100dvh)
+    animation-timeline: scroll();
+    animation-range-start: calc(100dvh + 2000px + 540dvh);
+    animation-range-end: calc(100dvh + 2000px + 720dvh);
 }
 
 .slide__logotypes__item+.slide__logotypes__item {
