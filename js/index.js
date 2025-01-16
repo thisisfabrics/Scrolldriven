@@ -223,6 +223,7 @@ if (!CSS.supports("animation-timeline", "scroll()")) {
             animation.cancel()
         populateWithAnimations()
     })
+    populateWithAnimations()
 }
 
 
